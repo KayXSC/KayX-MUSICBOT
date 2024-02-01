@@ -1,4 +1,4 @@
-<h1 align="center"><img src="./logo/logo.gif" width="30px"> KayX BOT <img src="./logo/logo.gif" width="30px"></h1>
+<h1 align="center"><img src="./logo/logo.gif" width="30px"> KayX MUSICBOT <img src="./logo/logo.gif" width="30px"></h1>
 
 ## ✨Ultimas Actualizaciones
 
