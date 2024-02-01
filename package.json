@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@discordjs/voice": "^0.16.1",
+    "discord-leveling": "^1.1.0",
+    "discord-xp": "^1.1.16",
+    "discord.js": "^13.3.1",
+    "ffmpeg-static": "^5.2.0",
+    "fs": "^0.0.1-security",
+    "libsodium-wrappers": "^0.7.13",
+    "play-dl": "^1.9.7",
+    "spotify-web-api-node": "^5.0.2",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "youtube-sr": "^4.3.10",
+    "ytdl-core": "^4.11.5"
+  }
+}

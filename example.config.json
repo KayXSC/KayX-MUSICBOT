@@ -1,0 +1,16 @@
+{
+    "bot": {
+        "token": "TU_TOKEN",
+        "prefix": "$"
+    },
+    "database": {
+        "mongoUrl": "TU_CLUSTER_MONGODB"
+    },
+    "leveling": {
+        "enabled": true,
+        "xpRate": 1.0
+    },
+    "music": {
+        "volume": 5
+    }
+}
