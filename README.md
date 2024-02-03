@@ -7,7 +7,6 @@ v1.1 En desarrollo! Comprueba las ultimas noticias [AQUI!](https://github.com/ne
 ¿Qué funciones trae este bot? Expliquemos:
  - Reproducción de musica de todas las plataformas a traves de links
  - Tenemos un dashboard
- - Base de datos implementada para guardar los niveles de los usuarios en tu servidor
  - Más comandos y funcionalidades
  - ¡Y mucho más por venir!
 
