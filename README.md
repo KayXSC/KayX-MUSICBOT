@@ -14,6 +14,7 @@ v1.1 En desarrollo! Comprueba las ultimas noticias [AQUI!](https://github.com/ne
 ## 🚧 | Prerequisitos
 
 - [Node.js 16+](https://nodejs.org/en/download/)
+- [Python 3.12](https://www.python.org/downloads/)
 - Necesitarás tener una instancia de MongoDB corriendo, ya sea localmente en tu máquina o en un servicio de hosting
 - Renombra el archivo "example.config.json" a "config.json" y configuralo
 
