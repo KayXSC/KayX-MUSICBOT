@@ -9,6 +9,7 @@ v1.1 En desarrollo! Comprueba las ultimas noticias [AQUI!](https://github.com/ne
  - Tenemos un dashboard
  - Más comandos y funcionalidades
  - ¡Y mucho más por venir!
+ - Gracias por descargar el bot
 
 ## 🚧 | Prerequisitos
 
