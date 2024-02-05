@@ -4,18 +4,12 @@ const Discord = require('discord.js');
 const commands = new Map();
 const { stream } = require('play-dl');
 const { MessageActionRow, MessageButton } = require('discord.js');
-const leveling = require('./leveling');
-const DiscordXP = require('discord-xp');
 const { MessageEmbed } = require('discord.js');
 const mongoose = require('mongoose');
 const playdl = require('play-dl');
 
 // Lee el archivo de configuración
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
-
-// Configura la base de datos
-mongoose.connect(config.database.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
-DiscordXP.setURL(config.database.mongoUrl);
 
 // Configura el cliente de Discord
 const client = new Discord.Client({ 
