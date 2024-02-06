@@ -8,7 +8,7 @@
   "dependencies": {
     "@discordjs/voice": "^0.16.1",
     "discord-xp": "^1.1.16",
-    "discord.js": "^14.14.1",
+    "discord.js": "^13.3.1",
     "ffmpeg-static": "^5.2.0",
     "fs": "^0.0.1-security",
     "libsodium-wrappers": "^0.7.13",
