@@ -16,7 +16,7 @@ v1.1 En desarrollo! Comprueba las ultimas noticias [AQUI!](https://github.com/ne
 - [Node.js 16+](https://nodejs.org/en/download/)
 - [Python 3.12](https://www.python.org/downloads/)
 - Necesitarás tener una instancia de MongoDB corriendo, ya sea localmente en tu máquina o en un servicio de hosting
-- Renombra el archivo "example.config.json" a "config.json" y configuralo
+- Renombra el archivo "example.config.json" a "config.json" y configuralo 
 
 ## 📝 | Tutorial
 - En tu consola de comandos dirijete hasta donde hayas instalado la carpeta y una vez ahi introduce el siguiente comando para instalar todas las dependecias necesarias para que el bot funcione "npm install"
