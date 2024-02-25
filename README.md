@@ -1,6 +1,7 @@
 <h1 align="center"><img src="./logo/logo.gif" width="30px"> KayX MUSICBOT <img src="./logo/logo.gif" width="30px"></h1>
 
 ## ✨Ultimas Actualizaciones
+ - Solucionado el error de cuando parabas el bot con el comando "stop" y luego volvias a mandar una canción no reprodujese nada, ya solucionado
 
 v1.1 En desarrollo! Comprueba las ultimas noticias [AQUI!](https://github.com/neegroo/KayXBOT)
 
