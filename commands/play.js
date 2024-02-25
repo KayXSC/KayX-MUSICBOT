@@ -1,4 +1,4 @@
-const { joinVoiceChannel, createAudioPlayer, AudioPlayerStatus, createAudioResource } = require('@discordjs/voice');
+const { joinVoiceChannel, createAudioPlayer, AudioPlayerStatus, createAudioResource, getVoiceConnection, VoiceConnectionStatus } = require('@discordjs/voice');
 const { stream, video_info } = require('play-dl');
 const { MessageEmbed } = require('discord.js');
 
@@ -7,7 +7,6 @@ module.exports = {
     execute: async function(message, queues) {
         const url = message.content.split(' ')[1];
 
-        // Verificar si la URL es válida
         const urlIsValid = (url) => {
             try {
                 new URL(url);
@@ -17,7 +16,6 @@ module.exports = {
             return true;
         }
 
-        // Verificar si la URL es de un video de YouTube
         const isYoutubeVideo = (url) => {
             const youtubeVideoRegex = /^(https?:\/\/)?(www\.)?(m\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
             return youtubeVideoRegex.test(url);
@@ -27,22 +25,24 @@ module.exports = {
             return message.channel.send('Por favor, proporciona una URL válida de un video de YouTube.');
         }
         
-        const channel = message.member.voice.channel;
+        let connection = getVoiceConnection(message.guild.id);
+        if (!connection || connection.state.status === VoiceConnectionStatus.Disconnected) {
+            const channel = message.member.voice.channel;
+            connection = joinVoiceChannel({
+                channelId: channel.id,
+                guildId: channel.guild.id,
+                adapterCreator: channel.guild.voiceAdapterCreator,
+            });
+        }
 
-        const connection = joinVoiceChannel({
-            channelId: channel.id,
-            guildId: channel.guild.id,
-            adapterCreator: channel.guild.voiceAdapterCreator,
-        });
-
-        const player = createAudioPlayer();
+        let player = connection.state.subscription ? connection.state.subscription.player : createAudioPlayer();
+        connection.subscribe(player);
 
         const songInfo = await video_info(url);
         const songTitle = songInfo.video_details.title;
-        const songDuration = songInfo.video_details.durationRaw; // get song duration
-        const requester = message.author.username; // get song requester
+        const songDuration = songInfo.video_details.durationRaw;
+        const requester = message.author.username;
 
-        // If there's already a queue for this server, add the song to the queue
         if (queues.has(message.guild.id)) {
             queues.get(message.guild.id).push({ url, title: songTitle, duration: songDuration, requester, info: songInfo });
             const embed = new MessageEmbed()
@@ -59,17 +59,15 @@ module.exports = {
                 )
                 .setTimestamp()
                 .setFooter({ text: 'KayX Co!', iconURL: 'https://i.imgur.com/P8HWC5S.png' });
-            message.channel.send({ embeds: [embed] }); // Message when a song is added to the queue
+            message.channel.send({ embeds: [embed] });
             return;
         }
 
-        // Otherwise, create a new queue
         queues.set(message.guild.id, [{ url, title: songTitle, duration: songDuration, requester, info: songInfo }]);
 
-        // Function to play the next song in the queue
         const playNextSong = async () => {
             const nextSong = queues.get(message.guild.id).shift();
-
+        
             if (!nextSong) {
                 player.stop();
                 connection.destroy();
@@ -77,7 +75,6 @@ module.exports = {
                 return;
             }
 
-            // Generate a list of songs in the queue
             const queueList = queues.get(message.guild.id).map((song, index) => `${index + 1}. ${song.title} (${song.duration}) solicitada por ${song.requester}`).join('\n');
 
             const info = nextSong.info;
@@ -97,14 +94,14 @@ module.exports = {
                 )
                 .setTimestamp()
                 .setFooter({ text: 'KayX Co!', iconURL: 'https://i.imgur.com/P8HWC5S.png' });
-            message.channel.send({ embeds: [embed] }); // Message when a song starts playing
+            message.channel.send({ embeds: [embed] });
 
             const streamOptions = {
                 type: 'opus',
-                quality: 3, // highest quality
+                quality: 3,
                 requestOptions: {
                     headers: {
-                        cookie: '', // Optional. If provided, it will fetch age-restricted videos also.
+                        cookie: '',
                     },
                 },
             };
@@ -116,11 +113,16 @@ module.exports = {
             player.play(resource);
         };
 
-        player.on(AudioPlayerStatus.Idle, playNextSong);
+        player.on(AudioPlayerStatus.Idle, () => {
+            if (queues.get(message.guild.id).length === 0) {
+                player.stop();
+                connection.destroy();
+                queues.delete(message.guild.id);
+            } else {
+                playNextSong();
+            }
+        });
 
-        connection.subscribe(player);
-
-        // Start playing
         playNextSong();
     }
 };
